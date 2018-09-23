@@ -26,7 +26,7 @@ class LandingContainer extends React.Component {
   render() {
     let profileAction ='create';
     return (
-      <section className='landingContainer'>
+      <section className='landingContainer container-outer'>
         {renderIf(!this.props.userAuth,
           <Intro />
         )}
