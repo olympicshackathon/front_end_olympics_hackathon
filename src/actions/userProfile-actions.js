@@ -19,7 +19,7 @@ export const userProfileCreateRequest = userProfile => (dispatch, getState) => {
   let { userAuth } = getState();
   return superagent.post(`${process.env.API_URL}/api/profile`)
     .set('Authorization', `Bearer ${userAuth}`)
-    .field({username: userProfile.username, image: userProfile.image, country: userProfile.country, state: userProfile.state, birthdate: userProfile.birthdate, tags: userProfile.tags })
+    .field({username: userProfile.username, image: userProfile.image, country: userProfile.country })
     .then( res => {
       dispatch(userProfileCreate(res.body));
       return res;
