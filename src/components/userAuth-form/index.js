@@ -104,16 +104,16 @@ class UserAuthForm extends React.Component {
     }
     this.setState(state => ({
       submitted: true,
-      usernameError: state.usernameError || state.username ? null : 'required',
-      emailError: state.emailError || state.email ? null : 'required',
-      passwordError: state.passwordError || state.password ? null : 'required',
+      usernameError: state.usernameError || state.username ? null : 'Required field.',
+      emailError: state.emailError || state.email ? null : 'Required field.',
+      passwordError: state.passwordError || state.password ? null : 'Required field.',
     }))
   };
   handleError = err => {
     const usernameError = (
       err.status === 401 
-        ? 'username or password incorrect' 
-        : 'username or email already taken'
+        ? 'That username or password is incorrect. Try another.' 
+        : 'That username or email already taken. Try another.'
       );
 
     this.setState({
@@ -162,7 +162,7 @@ class UserAuthForm extends React.Component {
         {renderIf(username && this.props.authFormAction=== 'Sign Up',
           <div className='username-availability-outer'>
             <p className='username-availability'>
-              {username} {usernameAvailable ? 'is available': 'is not available'}
+              {username} {usernameAvailable ? 'is available.': 'is not available.'}
             </p>
           </div>
         )}
@@ -177,7 +177,9 @@ class UserAuthForm extends React.Component {
           onBlur={this.handleBlur}
         />
         <Tooltip message={passwordError} show={ focused === 'password' || submitted}/>
-        <button className='formButton' type='submit'> {this.props.authFormAction} </button>
+        <div className='buttonAuthFormParentDiv'>
+          <button className='formButton' type='submit'> {this.props.authFormAction} </button>
+        </div>
       </form>
     );
   }

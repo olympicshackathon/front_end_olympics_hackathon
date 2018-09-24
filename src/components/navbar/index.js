@@ -20,6 +20,9 @@ class Navbar extends React.Component {
         return this.props.userProfileFetch()
           .catch(err => logError(err));
       })
+      .then(() => {
+        return this.setState({ showDropDown: false });
+      })
       .catch(err => {
         logError(err);
         errCB(err);
@@ -30,6 +33,9 @@ class Navbar extends React.Component {
       .then(() => {
         return this.props.userProfileFetch()
           .catch(err => logError(err));
+      })
+      .then(() => {
+        return this.setState({ showDropDown: false });
       })
       .catch(err => {
         logError(err);

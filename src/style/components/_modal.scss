@@ -2,7 +2,7 @@
 
 .modal {
   position: fixed;
-  z-index: 101;
+  z-index: 1501;
   top: 0;
   left: 0;
   width: 100%;
@@ -34,10 +34,11 @@
 //   overflow: scroll;
 }
 .modal-header {
-  padding: 3vw;
+  padding: 20px;
 }
 .modal-content {
   padding: 0 3vw 3vw 3vw;
+  margin-bottom: 40px;
 }
 .modal-heading {
   text-align: center;
@@ -45,8 +46,8 @@
   color: #1d1e1f;
   font-size: 20px;
   font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 15px;
+  line-height: 1;
+  margin-top: 15px;
   padding-right: 20px;
 }
 .modal-close {
@@ -99,5 +100,71 @@
 @media (min-width: 768px) {
   .modal-heading {
       font-size: 24px;
+  }
+}
+
+.modal {
+  .userauth-form {
+    font-size: 17px;
+    line-height: 1.59;
+    color: #3c3c3c;
+    width: calc((100vw - 65px));
+    margin: auto;
+
+    h2.title {
+      margin-bottom: 15px;
+      font-size: 17px;
+      color: #111;
+      line-height: 1.2;
+      font-weight: 600;
+      margin: 0 0 15px !important;
+    }
+    input {
+      font-size: 13px;
+      background-color: transparent !important;
+      border: 1px solid #dfe4e4;
+      border-radius: 2px;
+      box-shadow: none;
+      display: block;
+      box-sizing: border-box;
+      width: 74vw;
+      height: 39px;
+      padding: 8px;
+      margin: 0 0 24px;
+      color: #000;
+      transition: box-shadow .5s,border-color .25s ease-in-out;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    input:active, input:focus {
+      border: 1px solid #111;
+      box-shadow: 0 0 5px #afafaf;
+      -webkit-box-shadow: 0 0 5px #afafaf;
+      transition: box-shadow .5s,border-color .25s ease-in-out;
+    }
+  }
+  .buttonAuthFormParentDiv {
+    width: 74vw;
+  }
+  button {
+    float: right;
+  }
+  .userauth-buttons button {
+    margin-right: 20px;
+  }
+  .formButton {
+    width: calc((74vw - 20px) / 2);
+  }
+}
+
+@media (min-width: 875px) {
+  .modal .userauth-form input, .modal .buttonAuthFormParentDiv {
+    width: calc((700px - 6vw));
+  }
+  .modal .formButton {
+    width: calc((340px - 3vw));
+  }
+  .modal-content {
+    margin-bottom: 24px;
   }
 }
