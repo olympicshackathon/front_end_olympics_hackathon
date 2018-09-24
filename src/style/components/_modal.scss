@@ -104,7 +104,7 @@
 }
 
 .modal {
-  .userauth-form {
+  .userauth-form, .profile-form {
     font-size: 17px;
     line-height: 1.59;
     color: #3c3c3c;
@@ -158,7 +158,7 @@
 }
 
 @media (min-width: 875px) {
-  .modal .userauth-form input, .modal .buttonAuthFormParentDiv {
+  .modal .userauth-form input, .modal .profile-form input, .modal .buttonAuthFormParentDiv {
     width: calc((700px - 6vw));
   }
   .modal .formButton {

@@ -39,7 +39,9 @@ class UserProfileForm extends React.Component {
             value={this.state.image || ''}
             name="image"
             onChange={this.handleChange}/>
-          <p className='textRight'><button className='formButton' type="submit">Submit</button></p>
+          <div className='buttonAuthFormParentDiv'>
+            <button className='formButton' type="submit">Submit</button>
+          </div>
         </form>  
       </section>
     );
