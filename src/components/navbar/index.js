@@ -3,69 +3,102 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import Avatar from '../helpers/avatar';
-import { signOut } from '../../actions/userAuth-actions.js';
-import { classToggler, renderIf } from '../../lib/util.js';
+import { signUpRequest, signInRequest, signOut } from '../../actions/userAuth-actions.js';
+import { userProfileFetchRequest } from '../../actions/userProfile-actions.js';
+import UserAuthForm from '../userAuth-form';
+import { classToggler, logError, renderIf } from '../../lib/util.js';
 
 
 class Navbar extends React.Component {
   constructor(props){
     super(props);
-    this.state={ visible: false, intro: false};
+    this.state={ showDropDown: false, authFormAction: 'Sign Up' };
   }
-  componentWillMount() {
-    this.tokenCheck();
+  handleSignin = (user, errCB) => {
+    return this.props.signIn(user)
+      .then(() => {
+        return this.props.userProfileFetch()
+          .catch(err => logError(err));
+      })
+      .catch(err => {
+        logError(err);
+        errCB(err);
+      });
   };
-  tokenCheck = () => {
-    if(!this.props.userAuth) {
-      let token = localStorage.token;  
-      if(!token)
-        this.setState({ introNav: true });
-    }
-    else {
-      this.setState({ intro: false });
-    }
+  handleSignup = (user, errCB) => {
+    return this.props.signUp(user)
+      .then(() => {
+        return this.props.userProfileFetch()
+          .catch(err => logError(err));
+      })
+      .catch(err => {
+        logError(err);
+        errCB(err);
+    });
   };
   handleSignOut = () => {
     this.props.signOut();
+    this.setState({ showDropDown: false });
     this.props.history.push('/');
   };
   render() {
-    let user = require('./../helpers/assets/icons/user.icon.svg');
-    let caretDown = require('./../helpers/assets/icons/caret-down.icon.svg');
-    let profileImage = this.props.userProfile && this.props.userProfile.image ? <Avatar url={this.props.userProfile.image} /> : <img className='noProfileImageNav' src={user} />;
     let profileLink = this.props.userProfile && this.props.userProfile._id ? `/user/${this.props.userProfile._id}` : '';
+    let handleComplete = this.state.authFormAction === 'Sign Up' ? this.handleSignup : this.handleSignin;
     return (
-      <header className={classToggler({
-        'navbar': true,
-        'introNavbar': !this.props.userAuth,
-      })}>
-        <nav>
-          <div className='logo'>
-              <Link to='/' className={classToggler({ 'link': true, 'logo-text': true, 'intro-text': !this.props.userAuth })}><span className='bracket'>OLYMPICS</span><span className='light'>APP</span></Link>
+    <header>
+      <nav>
+        <div className='navPrimary' onClick={() => this.setState({ showDropDown: !this.state.showDropDown })}>
+          <div className={classToggler({
+            'navPrimary-toggle': true,
+            'ddOpen': this.state.showDropDown,
+          })}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
-          <ul className='socials'>
-            <li className='social dropdown'>
+          <p className='navPrimary-logo'><span className='logo1'>OLYMPIC </span><span className='logo2'>APP</span></p>
+        </div>
+        {renderIf(this.state.showDropDown,
+          <div className='navPrimary-dropdown'>
+            <div className='navShadow'></div>
+            <ul className='navPrimary-menu'>
+              <li className='navPrimary-li'>
+                <Link to='/' className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>HOME</Link>
+              </li>
+              <li className='navPrimary-li'>
+                <Link to='/' className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>GET INVOLVED</Link>
+              </li>
+              <li className='navPrimary-li'>
+                <Link to='/' className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>OUR MISSION</Link>
+              </li>
               {renderIf(this.props.userAuth,
                 <div>
-                  <div className='avatarDiv' onClick={() => this.setState({ visible: !this.state.visible })} >
-                    <img className='caretDown' src={caretDown}/>
-                    {profileImage}
-                  </div>
-                  <div className={ this.state.visible ? 'slideIn dropdownDiv' : 'slideOut dropdownDiv' }>
-                    <Link to={profileLink} className='link' onClick={() => this.setState({ visible: !this.state.visible })}>profile</Link>
-                    <p className='logout link' onClick={this.handleSignOut}>logout</p>
+                  <li className='navPrimary-li'>
+                    <Link to={profileLink} className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>PROFILE</Link>
+                  </li>
+                  <li className='navPrimary-li'>
+                    <p className='navPrimary-li-text' onClick={this.handleSignOut}>LOGOUT</p>
+                  </li>
+                </div>
+              )}
+              {renderIf(!this.props.userAuth,
+                <div className='navForm-div'>
+                  <UserAuthForm authFormAction={this.state.authFormAction} onComplete={handleComplete} />
+                  <div className='userauth-buttons'>
+                    {renderIf(this.state.authFormAction==='Sign In',
+                      <button className='formButton darkButton' onClick={() => this.setState({authFormAction: 'Sign Up'})}>Sign Up</button>
+                    )}
+                    {renderIf(this.state.authFormAction==='Sign Up',
+                      <button className='formButton darkButton' onClick={() => this.setState({authFormAction: 'Sign In'})}>Sign In</button>
+                    )}
                   </div>
                 </div>
               )}
-            </li>
-            {/* <li className='social'>
-              <a href="https://github.com/brianbixby" rel="noopener noreferrer" target="_blank"><span><img className='github' src={github} /></span> </a>
-            </li>
-            <li className='social'>
-              <a href="https://www.linkedin.com/in/brianbixby1/" rel="noopener noreferrer" target="_blank"><span><img className='linkedin' src={linkedin} /></span></a>
-            </li> */}
-          </ul>
-        </nav>
+            </ul>
+          </div>
+        )}
+      </nav>
     </header>
     );
   }
@@ -77,6 +110,9 @@ let mapStateToProps = state => ({
 });
 
 let mapDispatchToProps = dispatch => ({
+  signUp: user => dispatch(signUpRequest(user)),
+  signIn: user => dispatch(signInRequest(user)),
+  userProfileFetch: () => dispatch(userProfileFetchRequest()),
   signOut: () => dispatch(signOut()),
 });
 

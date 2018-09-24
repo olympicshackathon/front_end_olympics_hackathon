@@ -39,7 +39,7 @@ class UserProfileForm extends React.Component {
             value={this.state.image || ''}
             name="image"
             onChange={this.handleChange}/>
-          <p className='textRight'><button className='red-button b-button' type="submit">Submit</button></p>
+          <p className='textRight'><button className='formButton' type="submit">Submit</button></p>
         </form>  
       </section>
     );

@@ -54,10 +54,10 @@ class Intro extends React.Component {
                 <UserAuthForm authFormAction={this.state.authFormAction} onComplete={handleComplete} />
                 <div className='userauth-buttons'>
                   {renderIf(this.state.authFormAction==='Sign In',
-                    <button className='b-button dark-button' onClick={() => this.setState({authFormAction: 'Sign Up'})}>Sign Up</button>
+                    <button className='formButton darkButton' onClick={() => this.setState({authFormAction: 'Sign Up'})}>Sign Up</button>
                   )}
                   {renderIf(this.state.authFormAction==='Sign Up',
-                    <button className='b-button dark-button' onClick={() => this.setState({authFormAction: 'Sign In'})}>Sign In</button>
+                    <button className='formButton darkButton' onClick={() => this.setState({authFormAction: 'Sign In'})}>Sign In</button>
                   )}
                 </div>
               </Modal>

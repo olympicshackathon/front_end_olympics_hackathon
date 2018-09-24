@@ -129,7 +129,7 @@ class UserAuthForm extends React.Component {
       })}>
         {renderIf(this.props.authFormAction === 'Sign Up',
           <div>
-            <h2 className='title'>sign up.</h2>
+            <h2 className='title'>SIGN UP</h2>
             <input
               className={classToggler({error: emailError})}
               type='text'
@@ -145,7 +145,7 @@ class UserAuthForm extends React.Component {
         )}
         {renderIf(this.props.authFormAction !== 'Sign Up',
           <div>
-            <h2 className='title'>sign in.</h2>
+            <h2 className='title'>SIGN IN</h2>
           </div>
         )}
         <input
@@ -177,7 +177,7 @@ class UserAuthForm extends React.Component {
           onBlur={this.handleBlur}
         />
         <Tooltip message={passwordError} show={ focused === 'password' || submitted}/>
-        <button className='red-button b-button float-right ml20' type='submit'> {this.props.authFormAction} </button>
+        <button className='formButton' type='submit'> {this.props.authFormAction} </button>
       </form>
     );
   }
