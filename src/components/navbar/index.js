@@ -81,6 +81,9 @@ class Navbar extends React.Component {
               {renderIf(this.props.userAuth,
                 <div>
                   <li className='navPrimary-li'>
+                    <Link to='/play' className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>PLAY</Link>
+                  </li>
+                  <li className='navPrimary-li'>
                     <Link to={profileLink} className='navPrimary-li-text' onClick={() => this.setState({ showDropDown: false })}>PROFILE</Link>
                   </li>
                   <li className='navPrimary-li'>

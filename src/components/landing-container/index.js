@@ -5,6 +5,7 @@ import { browserHistory } from 'react-router'
 import { tokenSignInRequest } from '../../actions/userAuth-actions.js';
 import { userProfileFetchRequest, userProfileUpdateRequest } from '../../actions/userProfile-actions.js';
 import Intro from '../intro';
+
 import UserProfileForm from '../userProfile-form';
 import Modal from '../helpers/modal';
 import { userValidation, logError, renderIf } from './../../lib/util.js';
