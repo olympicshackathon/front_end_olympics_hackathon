@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Navbar from '../navbar';
 import LandingContainer from '../landing-container';
 import ProfileContainer from '../profile-container';
+import MapContainer from '../map-container';
 import { signIn, tokenSignInRequest } from '../../actions/userAuth-actions.js';
 import { userProfileFetchRequest } from '../../actions/userProfile-actions.js';
 
@@ -16,6 +17,7 @@ class App extends React.Component {
           <Route path='*' component={Navbar} />
           <Route exact path='/' component={LandingContainer} />
           <Route exact path='/user/:profileID' component={ProfileContainer} />
+          <Route exact path='/play' component={MapContainer} />
         </section>
       </BrowserRouter>
     );
